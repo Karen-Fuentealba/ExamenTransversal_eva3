@@ -1,0 +1,530 @@
+/* Imágenes de blog con altura igualada */
+.blog-img-fixed {
+  height: 250px;
+  object-fit: cover;
+  width: 100%;
+}
+/* Unificado: .footer-ambiente .card.card-body strong, p */
+.footer-ambiente .card.card-body strong,
+.footer-ambiente .card.card-body p {
+  color: var(--rosa-oscuro) !important;
+  text-align: justify;
+}
+:root {
+  --rosa-oscuro: #c94f7c;
+  --rosa-pastel: #ffe0ef;
+}
+/* ================= FOOTER PROFESIONAL (index.html) ================= */
+.footer-ambiente {
+  background: var(--fucsia-oscuro);
+  color: #fff;
+  font-size: 1.05em;
+}
+.footer-ambiente            
+
+
+
+h5 {
+  letter-spacing: 0.5px;
+  color: var(--fucsia-claro) !important;
+}
+.footer-ambiente ul,
+.footer-ambiente ul li,
+.footer-ambiente ul li a,
+.footer-ambiente .btn,
+.footer-ambiente .bi,
+.footer-ambiente small,
+.footer-ambiente p,
+.footer-ambiente .card.card-body {
+  color: #fff !important;
+}
+/* Unificado: .footer-ambiente .card.card-body */
+.footer-ambiente .card.card-body {
+  background: #fff0fa;
+  color: #222;
+  border-radius: 1em;
+  border: none;
+  box-shadow: 0 2px 12px 0 #e1009833;
+  font-size: 0.98em;
+}
+.footer-ambiente ul li {
+  margin-bottom: 0.5em;
+}
+.footer-ambiente a {
+  transition: color 0.18s;
+}
+.footer-ambiente a.text-white-50:hover,
+.footer-ambiente a.text-white-50:focus {
+  color: var(--fucsia-claro) !important;
+  text-decoration: underline;
+}
+.footer-ambiente .btn-outline-primary {
+  border-color: #fff;
+  color: #fff;
+  background: transparent;
+}
+.footer-ambiente .btn-outline-primary:hover {
+  background: var(--fucsia);
+  color: #fff;
+  border-color: var(--fucsia);
+}
+/* Specific footer contact button should be fucsia outline to match site buttons */
+.footer-ambiente .btn-contacto {
+  color: var(--fucsia);
+  border-color: var(--fucsia);
+  background: transparent;
+}
+.footer-ambiente .btn-contacto:hover {
+  background: var(--fucsia);
+  color: #fff;
+  border-color: var(--fucsia-oscuro);
+}
+.footer-ambiente .bi {
+  vertical-align: middle;
+  margin-right: 0.4em;
+}
+.footer-ambiente .card.card-body {
+  border: none;
+  font-size: 0.98em;
+  background: #fff0fa;
+  color: #222;
+}
+.footer-ambiente hr {
+  border-top: 1.5px solid #fff3;
+}
+/* ================= JUSTIFICAR TEXTO EN NOSOTROS ================= */
+#nosotros .bg-light p {
+  text-align: justify;
+}
+/* ================= SECCIÓN NOSOTROS (index.html) ================= */
+.text-fucsia {
+  color: var(--fucsia) !important;
+}
+#nosotros ul li i {
+  color: var(--fucsia);
+  margin-right: 0.5em;
+  font-size: 1.2em;
+  vertical-align: middle;
+}
+#nosotros img {
+  max-width: 100%;
+  border-radius: 1.2em;
+  box-shadow: 0 4px 24px 0 #e1009833;
+}
+#nosotros {
+  background: #fff0fa;
+}
+
+/* ================= ADMIN PANEL (admin.html) ================= */
+/* Paleta azulada para el panel de administración */
+/* Unificado: :root admin y general */
+:root {
+  --azul-admin: #2566a6;
+  --azul-admin-claro: #3a8dde;
+  --azul-admin-bg: #eaf4fb;
+  --azul-admin-oscuro: #17406a;
+  --rosa-oscuro: #c94f7c;
+  --rosa-pastel: #ffe0ef;
+  --fucsia: #e10098;
+  --fucsia-claro: #ff4fcf;
+  --fucsia-oscuro: #b8006e;
+  --fucsia-bg: #fff0fa;
+  --gris-oscuro: #222;
+  --amarillo: #ffb400;
+  --amarillo-claro: #ffd27a;
+  --amarillo-oscuro: #cc8a00;
+}
+body.admin-panel {
+  background: linear-gradient(120deg, var(--azul-admin-claro) 60%, #b3e0ff 100%);
+}
+.admin-navbar {
+  background: var(--azul-admin) !important;
+  box-shadow: 0 2px 12px 0 var(--azul-admin-claro)33;
+}
+.admin-navbar .navbar-brand, .admin-navbar .nav-link {
+  color: #fff !important;
+  font-weight: 500;
+}
+.admin-navbar .nav-link.active, .admin-navbar .nav-link:hover {
+  color: #b3e0ff !important;
+}
+/* Nombre sitio admin */
+.ambiente-nombre {
+  font-size: 1.1em;
+  color: #b3e0ff;
+}
+/* Sección principal admin */
+.admin-section {
+  background: var(--azul-admin-bg);
+  border-radius: 12px;
+  box-shadow: 0 2px 12px 0 var(--azul-admin-claro)33;
+  padding: 2rem;
+  margin-bottom: 2rem;
+}
+@media (max-width: 991px) {
+  .admin-section { padding: 1rem; }
+}
+@media (max-width: 767px) {
+  .admin-section { padding: 0.5rem; }
+  .table th, .table td { font-size: 0.88em; padding: 0.4em 0.3em; }
+  .btn, .btn-sm, .btn-admin { font-size: 0.95em; padding: 0.3em 0.5em; }
+  .modal-content { padding: 0.5em; }
+  h2.h4, h5.mb-1, h5.mb-2 { font-size: 1.1em; }
+}
+@media (max-width: 833px), (max-height: 633px) {
+  body.admin-panel, html { overflow: auto !important; }
+}
+@media (max-width: 575px) {
+  .admin-section { padding: 0.2rem; }
+  .table th, .table td { font-size: 0.8em; }
+  .modal-dialog { max-width: 99vw; margin: 0.2rem auto; }
+}
+.table thead { background: var(--azul-admin-claro); color: #fff; }
+.btn-admin { background: var(--azul-admin-claro); border: none; color: #fff; }
+.btn-admin:hover { background: var(--azul-admin); color: #fff; }
+.badge-pendiente { background: #ffc107; color: #222; }
+.badge-aprobado { background: #198754; }
+.badge-rechazado { background: #dc3545; }
+.table-responsive { overflow-x: auto; }
+.table img, .img-servicio-admin { max-width: 50px; height: auto; border-radius: 8px; width: 60px; }
+@media (max-width: 767px) {
+  .table th, .table td { font-size: 0.92em; }
+  .table img, .img-servicio-admin { max-width: 36px; }
+}
+@media (max-width: 575px) {
+  .modal-dialog { max-width: 98vw; margin: 0.5rem auto; }
+}
+/* Botón cerrar sesión admin */
+.btn-logout { background: #dc3545; color: #fff; border: none; }
+.btn-logout:hover { background: #a71d2a; color: #fff; }
+/* Proveedor info en tabla de servicios admin */
+.proveedor-info-admin { font-size: 0.95em; color: var(--azul-admin); margin-top: 0.2em; }
+/* Modal de edición admin */
+#modalServicio .form-label { color: var(--azul-admin); }
+
+/* ================= COTILLÓN ANIMADO (index.html) ================= */
+.cotillon {
+  pointer-events: none;
+  position: absolute;
+  top: 0; left: 0; width: 100vw; height: 100vh;
+  z-index: 0;
+  overflow: hidden;
+}
+.cotillon-piece {
+  position: absolute;
+  border-radius: 50%;
+  opacity: 0.45;
+  width: 18px; height: 18px;
+  will-change: transform;
+  mix-blend-mode: multiply;
+}
+#servicios { position: relative; z-index: 1; }
+#servicios .card { position: relative; z-index: 2; }
+
+/* ================= NAVBAR LOGO (index.html) ================= */
+.logo-navbar {
+  height: 90px;
+  width: auto;
+  object-fit: contain;
+}
+
+/* ================= CARRITO BADGE (index.html) ================= */
+#carritoBadge {
+  font-size: 0.8em;
+}
+
+/* ================= HERO/BANNER (index.html) ================= */
+.banner-principal {
+  background: url('../img/banner.jpg') center/cover;
+  min-height: 350px;
+}
+
+/* ================= IMÁGENES DE SERVICIOS ADMIN (admin.html) ================= */
+.img-servicio-admin {
+  width: 60px;
+  border-radius: 8px;
+}
+
+/* ================= RESTO DE ESTILOS ORIGINALES (index.html) ================= */
+/* ================= style.css ================= */
+/* Estilos generales y personalizados para la web de eventos */
+
+/* ===== Paleta de colores fucsia ===== */
+:root {
+  --fucsia: #e10098;
+  --fucsia-claro: #ff4fcf;
+  --fucsia-oscuro: #b8006e;
+  --fucsia-bg: #fff0fa;
+  --gris-oscuro: #222;
+}
+
+body {
+  background: var(--fucsia-bg);
+}
+
+/* ====== Navbar ====== */
+.navbar, .navbar-light.bg-light {
+  background: var(--fucsia);
+}
+.navbar .navbar-brand, .navbar .nav-link, .navbar .nav-link:focus, .navbar .nav-link:active {
+  color: #111 !important;
+}
+.navbar .nav-link.active, .navbar .nav-link:hover {
+  color: var(--fucsia-claro) !important;
+}
+
+#contactanos {
+  /* slightly darker gray for better contrast */
+  background: #e6e6e6 !important;
+  padding: 3.5rem 0;
+}
+#contactanos h2 {
+  color: var(--fucsia); /* use site fucsia for the contact title */
+  margin-bottom: 1.25rem;
+}
+
+/* Inputs y textarea con fondo blanco y bordes redondeados */
+#contactanos label,
+#contactanos input,
+#contactanos textarea,
+#contactanos button {
+  color: #07263f !important;
+}
+
+#contactanos .form-control {
+  background: #fff;
+  border: 1px solid rgba(0,0,0,0.08);
+  border-radius: 0.55rem;
+  padding: 0.9rem 1rem;
+  box-shadow: 0 4px 18px rgba(6,40,75,0.06);
+}
+
+#contactanos textarea.form-control {
+  min-height: 160px;
+  resize: vertical;
+}
+
+#contactanos .btn-primary {
+  /* match the site primary (fucsia) used by Ver Detalle */
+  background: var(--fucsia);
+  border-color: var(--fucsia-oscuro);
+  color: #fff;
+  padding: 0.6rem 1.2rem;
+  border-radius: 0.5rem;
+}
+
+#contactanos .btn-primary:hover {
+  background: var(--fucsia-claro);
+  border-color: var(--fucsia);
+}
+
+/* Make contact success buttons match bootstrap success (Agregar al Carrito) */
+/* Ensure outline-primary in contact matches site fucsia instead of the previous blue */
+#contactanos .btn-outline-primary,
+#contactanos .af-btn-outline-primary {
+  color: var(--fucsia);
+  border-color: var(--fucsia);
+  background: transparent;
+}
+#contactanos .btn-outline-primary:hover,
+#contactanos .af-btn-outline-primary:hover {
+  background: var(--fucsia);
+  color: #fff;
+  border-color: var(--fucsia-oscuro);
+}
+
+/* Spacing to match the visual sample */
+#contactanos .row > [class*="col-"] {
+  margin-bottom: 1rem;
+}
+
+/* Make form controls full width on small devices and aligned nicely */
+@media (max-width: 767px) {
+  #contactanos .form-control { padding: 0.8rem; }
+}
+
+/* Footer FAQ card styling */
+#faqFooter .card.card-body {
+  background: #ffffff !important; /* white background */
+  color: #222 !important; /* dark paragraph text */
+  border-radius: 0.8rem;
+}
+#faqFooter .card.card-body strong {
+  color: var(--fucsia) !important; /* fuchsia questions */
+  display: block;
+  margin-top: 0.4rem;
+}
+#faqFooter .card.card-body p {
+  margin-bottom: 0.6rem;
+  color: #333;
+}
+
+.af-btn {
+  display: inline-block;
+  font-family: inherit;
+  font-weight: 500;
+  padding: 0.6rem 1rem;
+  border-radius: 0.5rem;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: background 0.18s, color 0.18s, transform 0.12s;
+  line-height: 1;
+}
+.af-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+
+/* Primary (default site fucsia) */
+.af-btn-primary {
+  background: var(--fucsia);
+  border-color: var(--fucsia-oscuro);
+  color: #fff;
+}
+.af-btn-primary:hover { background: var(--fucsia-claro); border-color: var(--fucsia); }
+
+/* Contact section buttons should match the site's primary (same as Ver Detalle) */
+#contactanos .af-btn-primary {
+  background: var(--fucsia);
+  border-color: var(--fucsia-oscuro);
+  color: #fff;
+}
+#contactanos .af-btn-primary:hover { background: var(--fucsia-claro); border-color: var(--fucsia); }
+
+/* Outline primary */
+.af-btn-outline-primary {
+  background: transparent;
+  color: var(--fucsia);
+  border-color: var(--fucsia);
+  /* Shadow & transition to match 'Agregar al Carrito' button */
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  transition: background 0.18s, color 0.18s, transform 0.12s, box-shadow 0.18s;
+}
+#contactanos .af-btn-outline-primary, #contactanos .btn-outline-primary {
+  /* Ensure transparent state shows fucsia text and border */
+  color: var(--fucsia) !important;
+  border-color: var(--fucsia) !important;
+  background: transparent !important;
+}
+/* When outline-primary is filled (hover/active), make text dark to match site style */
+#contactanos .af-btn-outline-primary:hover,
+#contactanos .af-btn-outline-primary:active {
+  background: var(--fucsia);
+  color: var(--gris-oscuro);
+  border-color: var(--fucsia-oscuro);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+}
+/* Global hover/active state for outline primary: filled background with dark text */
+.af-btn-outline-primary:hover,
+.af-btn-outline-primary:active {
+  background: var(--fucsia);
+  color: var(--gris-oscuro);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+}
+# Secondary outline neutral
+.af-btn-outline-secondary { background: transparent; color: #6c757d; border-color: #6c757d; }
+.af-btn-outline-secondary:hover { background: #6c757d; color: #fff; }
+#contactanos .af-btn-outline-primary { color: var(--fucsia); border-color: var(--fucsia); background: transparent; }
+#contactanos .af-btn-outline-primary:hover { background: var(--fucsia); color: #fff; border-color: var(--fucsia-oscuro); }
+
+/* Success / Danger variants */
+.af-btn-success { background: var(--fucsia); border-color: var(--fucsia-oscuro); color: #fff; }
+.af-btn-success:hover { background: var(--fucsia-claro); }
+.af-btn-danger { background: #dc3545; border-color: #b02a37; color: #fff; }
+.af-btn-danger:hover { background: #b02a37; }
+.af-btn-outline-danger { background: transparent; color: #dc3545; border-color: #dc3545; }
+.af-btn-outline-danger:hover { background: #dc3545; color: #fff; }
+
+/* Warning / Amarillo variants (botón Reservar amarillo) */
+.af-btn-warning { background: var(--amarillo); border-color: var(--amarillo-oscuro); color: #222; }
+.af-btn-warning:hover { background: var(--amarillo-claro); }
+.af-btn-outline-warning { background: transparent; color: var(--amarillo); border-color: var(--amarillo); }
+.af-btn-outline-warning:hover { background: var(--amarillo); color: #222; }
+
+/* Admin button */
+.af-btn-admin { background: var(--azul-admin-claro); color: #fff; border: none; }
+.af-btn-admin:hover { background: var(--azul-admin); }
+
+/* Links */
+.af-btn-link { background: transparent; color: var(--fucsia); border: none; padding: 0; }
+.af-btn-link:hover { text-decoration: underline; }
+
+/* Sizes */
+.af-btn-sm { padding: 0.35rem 0.6rem; font-size: 0.92rem; }
+.af-btn-lg { padding: 0.9rem 1.4rem; font-size: 1.05rem; }
+
+/* Full width
+. Use the existing helper .w-100 where used in the code; keep consistent */
+.af-btn-block, .af-btn.w-100 { width: 100%; display: inline-block; }
+
+
+/* ====== Badges y destacados ====== */
+.badge.bg-success {
+  background: var(--fucsia) !important;
+}
+#carritoBadge {
+  background: var(--fucsia-oscuro) !important;
+}
+
+/* ====== Hero/Banner ====== */
+section.bg-dark.text-white {
+  background: linear-gradient(120deg, var(--fucsia), var(--fucsia-claro)) !important;
+}
+
+
+/* ====== Cards (servicios y blog) con efecto ====== */
+.card {
+  border: 2px solid var(--fucsia-claro);
+  box-shadow: 0 2px 12px 0 #e1009833;
+  transition: transform 0.22s cubic-bezier(.4,1.5,.5,1), box-shadow 0.22s cubic-bezier(.4,1.5,.5,1);
+  will-change: transform, box-shadow;
+  background: #fff;
+}
+.card:hover, .card:focus-within {
+  transform: translateY(-8px) scale(1.035);
+  box-shadow: 0 8px 32px 0 #e10098aa, 0 2px 12px 0 #e1009833;
+  z-index: 3;
+}
+.card-title {
+  color: var(--fucsia-oscuro);
+  transition: color 0.18s;
+}
+.card:hover .card-title, .card:focus-within .card-title {
+  color: var(--fucsia);
+}
+
+/* ====== Footer ====== */
+footer.bg-dark {
+  background: var(--fucsia-oscuro) !important;
+}
+footer a, footer small {
+  color: #fff !important;
+}
+
+/* Futuro: agregar media queries personalizados, animaciones, estilos para blog, login, etc. */
+/* ===== Info de proveedor en modal de detalle ===== */
+.proveedor-info {
+  background: #f8f9fa;
+  border-radius: 8px;
+  padding: 1rem;
+  margin-top: 1rem;
+  font-size: 0.95rem;
+}
+.proveedor-info strong {
+  color: #0d6efd;
+}
+
+/* Imagenes de cards */
+/* ===== Imagenes de cards de servicios ===== */
+.card-img-top {
+  object-fit: cover;
+  height: 220px;
+  background: #e9ecef;
+}
+
+/* Badge carrito */
+/* ===== Badge de cantidad en el carrito del menú ===== */
+#carritoBadge {
+  min-width: 1.5em;
+  min-height: 1.5em;
+  display: inline-block;
+  text-align: center;
+  vertical-align: top;
+}
