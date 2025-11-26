@@ -494,7 +494,6 @@ src/
 │   ├── Carrito.jsx
 │   ├── GestionBlogs.jsx
 │   ├── GestionPagos.jsx
-│   ├── GestionPedidos.jsx
 │   ├── GestionServicios.jsx
 │   ├── GestionUsuarios.jsx
 │   ├── Home.jsx
