@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Table, Form, Badge, Spinner } from 'react-bootstrap';
 
 const AdminUsers = ({
@@ -14,6 +14,15 @@ const AdminUsers = ({
   handleChangeUserRole = async () => {},
   loading = false
 }) => {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const onResize = () => setIsMobile(window.innerWidth < 768);
+    onResize();
+    window.addEventListener('resize', onResize);
+    return () => window.removeEventListener('resize', onResize);
+  }, []);
+
   return (
     <section className="admin-section">
       {loading && (
@@ -38,99 +47,130 @@ const AdminUsers = ({
         </button>
       </div>
 
-      <div className="table-responsive">
-        <Table striped bordered hover>
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Nombre</th>
-              <th>Email</th>
-              <th>Rol</th>
-              <th>Estado</th>
-              <th>Fecha Registro</th>
-              <th>Acciones</th>
-            </tr>
-          </thead>
-          <tbody>
-            {filteredUsuarios.length > 0 ? filteredUsuarios.map((usuario, uidx) => (
-              <tr key={usuario.id ?? `user-${uidx}`}>
-                <td>{usuario.id}</td>
-                <td>
+      {isMobile ? (
+        <div className="admin-card-list">
+          {filteredUsuarios.length > 0 ? filteredUsuarios.map((usuario, uidx) => (
+            <div className="admin-card" key={usuario.id ?? `user-${uidx}`}>
+              <div className="card-row">
+                <div className="card-left">
                   <strong>{usuario.nombre || usuario.name} {usuario.apellidos || usuario.last_name}</strong>
-                </td>
-                <td>{usuario.email}</td>
-                <td>
-                  {amIAdmin ? (
-                    <Form.Select
-                      value={(usuario.role_id ?? usuario.rol_id ?? (usuario.rol === 'admin' ? 2 : 1))}
-                      onChange={async (e) => {
-                        const newRole = Number(e.target.value);
-                        if (!amIAdmin) return;
-                        // Delegate actual role change to parent handler
-                        await handleChangeUserRole(usuario, newRole);
-                      }}
-                    >
-                      <option value={1}>Cliente</option>
-                      <option value={2}>Administrador</option>
-                    </Form.Select>
-                  ) : (
-                    <Badge bg={(usuario.role_id === 2 || usuario.rol_id === 2 || usuario.rol === 'admin') ? 'danger' : 'primary'}>
-                      {(usuario.role_id === 2 || usuario.rol_id === 2 || usuario.rol === 'admin') ? 'Administrador' : 'Cliente'}
-                    </Badge>
-                  )}
-                </td>
-                <td>
-                  { (usuario.state === false || String(usuario.state) === 'false') ? (
-                    <Badge bg="danger">Inactivo</Badge>
-                  ) : (
-                    <Badge bg="success">Activo</Badge>
-                  ) }
-                </td>
-
-                <td>{usuario.creado_en || usuario.fechaRegistro}</td>
-                <td>
-                  {amIAdmin && (
-                    <div className="d-flex gap-2 align-items-center">
-                      <div className="form-check form-switch">
-                        <input
-                          className="form-check-input"
-                          type="checkbox"
-                          role="switch"
-                          id={`user-state-${usuario.id}`}
-                          checked={!(usuario.state === false || String(usuario.state) === 'false')}
-                          disabled={user && user.id === usuario.id}
-                          onChange={async (e) => {
-                            const newState = e.target.checked;
-                            await toggleUserState(usuario.id, newState);
-                          }}
-                          title={user && user.id === usuario.id ? 'No puedes cambiar el estado de tu propia cuenta desde aquí' : (usuario.state === false || String(usuario.state) === 'false' ? 'Desbloquear usuario' : 'Bloquear usuario')}
-                        />
-                        <label className="form-check-label" htmlFor={`user-state-${usuario.id}`}>{(usuario.state === false || String(usuario.state) === 'false') ? 'Inactivo' : 'Activo'}</label>
-                      </div>
-
-                      {usuario.id !== user.id && (
-                        <button
-                          type="button"
-                          className="af-btn af-btn-outline-danger af-btn-sm"
-                          onClick={() => handleDeleteUser(usuario.id)}
-                        >
-                          <i className="bi bi-trash"></i>
-                        </button>
-                      )}
-                    </div>
-                  )}
-                </td>
-              </tr>
-            )) : (
+                  <div className="meta">{usuario.email}</div>
+                  <div className="meta">ID: {usuario.id}</div>
+                </div>
+                <div className="card-right">
+                  <div className="meta">{(usuario.state === false || String(usuario.state) === 'false') ? 'Inactivo' : 'Activo'}</div>
+                  <div className="d-flex gap-1">
+                    {amIAdmin && (
+                      <button
+                        type="button"
+                        className="af-btn af-btn-outline-danger af-btn-sm"
+                        onClick={() => handleDeleteUser(usuario.id)}
+                      >
+                        <i className="bi bi-trash"></i>
+                      </button>
+                    )}
+                  </div>
+                </div>
+              </div>
+            </div>
+          )) : (
+            <div className="text-center text-muted py-4">No hay usuarios registrados</div>
+          )}
+        </div>
+      ) : (
+        <div className="table-responsive">
+          <Table striped bordered hover>
+            <thead>
               <tr>
-                <td colSpan="7" className="text-center text-muted py-4">
-                  No hay usuarios registrados
-                </td>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Email</th>
+                <th>Rol</th>
+                <th>Estado</th>
+                <th className="hide-mobile-col">Fecha Registro</th>
+                <th>Acciones</th>
               </tr>
-            )}
-          </tbody>
-        </Table>
-      </div>
+            </thead>
+            <tbody>
+              {filteredUsuarios.length > 0 ? filteredUsuarios.map((usuario, uidx) => (
+                <tr key={usuario.id ?? `user-${uidx}`}>
+                  <td>{usuario.id}</td>
+                  <td>
+                    <strong>{usuario.nombre || usuario.name} {usuario.apellidos || usuario.last_name}</strong>
+                  </td>
+                  <td>{usuario.email}</td>
+                  <td>
+                    {amIAdmin ? (
+                      <Form.Select
+                        value={(usuario.role_id ?? usuario.rol_id ?? (usuario.rol === 'admin' ? 2 : 1))}
+                        onChange={async (e) => {
+                          const newRole = Number(e.target.value);
+                          if (!amIAdmin) return;
+                          await handleChangeUserRole(usuario, newRole);
+                        }}
+                      >
+                        <option value={1}>Cliente</option>
+                        <option value={2}>Administrador</option>
+                      </Form.Select>
+                    ) : (
+                      <Badge bg={(usuario.role_id === 2 || usuario.rol_id === 2 || usuario.rol === 'admin') ? 'danger' : 'primary'}>
+                        {(usuario.role_id === 2 || usuario.rol_id === 2 || usuario.rol === 'admin') ? 'Administrador' : 'Cliente'}
+                      </Badge>
+                    )}
+                  </td>
+                  <td>
+                    { (usuario.state === false || String(usuario.state) === 'false') ? (
+                      <Badge bg="danger">Inactivo</Badge>
+                    ) : (
+                      <Badge bg="success">Activo</Badge>
+                    ) }
+                  </td>
+
+                  <td className="hide-mobile-col">{usuario.creado_en || usuario.fechaRegistro}</td>
+                  <td>
+                    {amIAdmin && (
+                      <div className="d-flex gap-2 align-items-center">
+                        <div className="form-check form-switch">
+                          <input
+                            className="form-check-input"
+                            type="checkbox"
+                            role="switch"
+                            id={`user-state-${usuario.id}`}
+                            checked={!(usuario.state === false || String(usuario.state) === 'false')}
+                            disabled={user && user.id === usuario.id}
+                            onChange={async (e) => {
+                              const newState = e.target.checked;
+                              await toggleUserState(usuario.id, newState);
+                            }}
+                            title={user && user.id === usuario.id ? 'No puedes cambiar el estado de tu propia cuenta desde aquí' : (usuario.state === false || String(usuario.state) === 'false' ? 'Desbloquear usuario' : 'Bloquear usuario')}
+                          />
+                          <label className="form-check-label" htmlFor={`user-state-${usuario.id}`}>{(usuario.state === false || String(usuario.state) === 'false') ? 'Inactivo' : 'Activo'}</label>
+                        </div>
+
+                        {usuario.id !== user.id && (
+                          <button
+                            type="button"
+                            className="af-btn af-btn-outline-danger af-btn-sm"
+                            onClick={() => handleDeleteUser(usuario.id)}
+                          >
+                            <i className="bi bi-trash"></i>
+                          </button>
+                        )}
+                      </div>
+                    )}
+                  </td>
+                </tr>
+              )) : (
+                <tr>
+                  <td colSpan="7" className="text-center text-muted py-4">
+                    No hay usuarios registrados
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </Table>
+        </div>
+      )}
     </section>
   );
 };

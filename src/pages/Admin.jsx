@@ -1109,44 +1109,60 @@ const Admin = () => {
           </div>
         </Alert>
 
-        {/* Navegación de pestañas */}
+        {/* Navegación de pestañas (desktop) y select (mobile) */}
         <div className="d-flex justify-content-between align-items-center mb-4">
-          <Nav variant="tabs">
-            <Nav.Item>
-              <Nav.Link 
-                active={activeTab === 'servicios'}
-                onClick={() => setActiveTab('servicios')}
+          <div style={{ flex: 1 }}>
+            <Nav variant="tabs" className="d-none d-sm-flex">
+              <Nav.Item>
+                <Nav.Link 
+                  active={activeTab === 'servicios'}
+                  onClick={() => setActiveTab('servicios')}
+                >
+                  Gestión de Servicios
+                </Nav.Link>
+              </Nav.Item>
+              <Nav.Item>
+                <Nav.Link 
+                  active={activeTab === 'usuarios'}
+                  onClick={() => setActiveTab('usuarios')}
+                >
+                  Gestión de Usuarios
+                </Nav.Link>
+              </Nav.Item>
+              <Nav.Item>
+                <Nav.Link 
+                  active={activeTab === 'blogs'}
+                  onClick={() => setActiveTab('blogs')}
+                >
+                  Gestión de Blogs
+                </Nav.Link>
+              </Nav.Item>
+              <Nav.Item>
+                <Nav.Link
+                  active={activeTab === 'pagos'}
+                  onClick={() => setActiveTab('pagos')}
+                >
+                  Gestión de Pagos
+                </Nav.Link>
+              </Nav.Item>
+            </Nav>
+
+            {/* Mobile select (very small screens) */}
+            <div className="d-block d-sm-none">
+              <select
+                className="form-select admin-tab-select"
+                value={activeTab}
+                onChange={(e) => setActiveTab(e.target.value)}
+                aria-label="Seleccionar sección del admin"
               >
-                Gestión de Servicios
-              </Nav.Link>
-            </Nav.Item>
-            <Nav.Item>
-              <Nav.Link 
-                active={activeTab === 'usuarios'}
-                onClick={() => setActiveTab('usuarios')}
-              >
-                Gestión de Usuarios
-              </Nav.Link>
-            </Nav.Item>
-            <Nav.Item>
-              <Nav.Link 
-                active={activeTab === 'blogs'}
-                onClick={() => setActiveTab('blogs')}
-              >
-                Gestión de Blogs
-              </Nav.Link>
-            </Nav.Item>
-            <Nav.Item>
-              <Nav.Link
-                active={activeTab === 'pagos'}
-                onClick={() => setActiveTab('pagos')}
-              >
-                Gestión de Pagos
-              </Nav.Link>
-            </Nav.Item>
-            {/* Pestaña 'Pedidos' eliminada: solo se mantiene Gestión de Pagos */}
-          </Nav>
-          
+                <option value="servicios">Gestión de Servicios</option>
+                <option value="usuarios">Gestión de Usuarios</option>
+                <option value="blogs">Gestión de Blogs</option>
+                <option value="pagos">Gestión de Pagos</option>
+              </select>
+            </div>
+          </div>
+
           <div className="text-end">
             <small className="text-muted">Panel de Administración</small>
             <br />

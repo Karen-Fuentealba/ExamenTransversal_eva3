@@ -179,6 +179,91 @@ body.admin-panel {
   .table th, .table td { font-size: 0.8em; }
   .modal-dialog { max-width: 99vw; margin: 0.2rem auto; }
 }
+/* Responsive tweaks specifically for the admin panel */
+@media (max-width: 767px) {
+  /* Make top action rows stack vertically on small screens */
+  .admin-section .d-flex.justify-content-between.align-items-center.mb-4 {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 0.6rem;
+  }
+
+  /* Make search inputs full width and buttons full width in header */
+  .admin-section input[type="search"],
+  .admin-section .search-input {
+    width: 100% !important;
+    min-width: 0 !important;
+  }
+
+  .admin-section .btn-admin,
+  .admin-section .af-btn {
+    width: 100% !important;
+  }
+
+  /* Tabs should wrap into multiple rows and be easier to tap */
+  .nav-tabs {
+    display: flex !important;
+    flex-wrap: wrap !important;
+  }
+  .nav-tabs .nav-item {
+    flex: 1 1 50% !important;
+  }
+  .nav-tabs .nav-link {
+    text-align: center;
+    padding: 0.5rem 0.6rem;
+    font-size: 0.95rem;
+  }
+
+  /* Tables: allow wrapping of long text and slightly smaller padding */
+  .table th, .table td { white-space: normal !important; word-break: break-word; }
+
+  /* Modal dialogs should take most of the viewport on phones */
+  .modal-dialog { max-width: 95vw; margin: 0.4rem auto; }
+}
+
+/* Extra small screens: improve tap targets and spacing */
+@media (max-width: 420px) {
+  .nav-tabs .nav-item { flex: 1 1 100% !important; }
+  .admin-navbar .navbar-brand { font-size: 1em; }
+  .admin-navbar .nav-link { font-size: 0.95rem; padding: 0.35rem 0.45rem; }
+  .table img, .img-servicio-admin { max-width: 36px; width: 36px; }
+}
+
+/* Very small screens: hide full tab bar and show select control instead */
+@media (max-width: 420px) {
+  .nav-tabs { display: none !important; }
+  .admin-tab-select { display: block !important; width: 100%; margin-bottom: 0.75rem; }
+}
+
+/* Card view for admin lists on small screens */
+.admin-card-list { display: none; }
+@media (max-width: 767px) {
+  .admin-card-list { display: block; }
+  .admin-card-list .admin-card {
+    background: #fff;
+    border-radius: 0.75rem;
+    padding: 0.75rem 0.9rem;
+    margin-bottom: 0.75rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  }
+  .admin-card .card-row { display: flex; justify-content: space-between; align-items: center; gap: 0.6rem; }
+  .admin-card .card-left { flex: 1 1 60%; }
+  .admin-card .card-right { flex: 0 0 auto; display:flex; gap:0.5rem; align-items:center; }
+  .admin-card .meta { font-size: 0.9rem; color: #666; }
+  /* Hide original table on small screens when card view is active */
+  .admin-section .table-responsive { display: none; }
+}
+
+/* On larger screens ensure card list hidden and table shown */
+@media (min-width: 768px) {
+  .admin-card-list { display: none; }
+  .admin-section .table-responsive { display: block; }
+}
+
+/* Hide less important columns on very small screens for remaining tables */
+@media (max-width: 575px) {
+  .hide-mobile-col { display: none !important; }
+}
 .table thead { background: var(--azul-admin-claro); color: #fff; }
 .btn-admin { background: var(--azul-admin-claro); border: none; color: #fff; }
 .btn-admin:hover { background: var(--azul-admin); color: #fff; }
