@@ -267,26 +267,26 @@ const Admin = () => {
 
   // Función para remover imagen actual (URLs existentes)
   const removeCurrentServiceImage = (imageIndex) => {
-    // Optimistic UI: remove locally first
-    setFormServicio(prev => {
-      const remaining = prev.currentImages.filter((_, index) => index !== imageIndex);
-      return { ...prev, currentImages: remaining };
-    });
+    // Optimistic UI: calcular el arreglo restante y actualizar localmente
+    const remaining = (formServicio.currentImages || []).filter((_, index) => index !== imageIndex);
+    setFormServicio(prev => ({ ...prev, currentImages: remaining }));
 
-    // If editing an existing service, persist removal immediately
+    // Si estamos editando un servicio existente, persistir la eliminación en el servidor
     if (servicioEditando && servicioEditando.id) {
       (async () => {
         try {
           setLoading(true);
-          // Prepare payload similar to handleSaveService: convert remaining URLs to Xano objects
-          const remaining = (formServicio.currentImages || []).filter((_, index) => index !== imageIndex);
+          // Preparar payload usando el arreglo `remaining` calculado arriba
           let imageForXano = null;
           if (remaining.length > 0) {
             const objs = remaining.map(url => ({
               path: url.replace('https://x8ki-letl-twmt.n7.xano.io', ''),
               name: url.split('/').pop(),
               type: 'image',
-              access: 'public'
+              access: 'public',
+              size: 0,
+              mime: 'image/jpeg',
+              meta: { filename: url.split('/').pop() }
             }));
             imageForXano = objs.length === 1 ? objs[0] : objs;
           }
@@ -456,15 +456,44 @@ const Admin = () => {
       
   if (xanoImageObjects.length > 0) {
         // Enviar los objetos completos de Xano (con path, name, type, meta, etc.)
-        imageForXano = xanoImageObjects.length === 1 ? xanoImageObjects[0] : xanoImageObjects;
+        // Pero antes, conservar las imágenes actuales del servicio y fusionarlas
+        const existingFromCurrent = (formServicio.currentImages || []).map(url => ({
+          path: url.replace('https://x8ki-letl-twmt.n7.xano.io', ''),
+          name: url.split('/').pop(),
+          type: 'image',
+          access: 'public',
+          size: 0,
+          mime: 'image/jpeg',
+          meta: { filename: url.split('/').pop() }
+        }));
+
+        // Combinar objetos existentes con los recién subidos
+        const combined = [...existingFromCurrent, ...xanoImageObjects];
+
+        // Deduplicar por 'path' para evitar duplicados accidentales
+        const seen = new Set();
+        const dedup = combined.filter(item => {
+          const p = (item.path || item.file?.path || item.url || item.file?.url || '').toString();
+          if (!p) {
+            // Si no hay path, usar el nombre como fallback
+            const k = item.name || JSON.stringify(item);
+            if (seen.has(k)) return false; seen.add(k); return true;
+          }
+          if (seen.has(p)) return false; seen.add(p); return true;
+        });
+
+        imageForXano = dedup.length === 1 ? dedup[0] : dedup;
         
       } else if (allImageUrls.length > 0) {
-        // Convertir URLs existentes a objetos esperados por Xano
+        // Convertir URLs existentes a objetos esperados por Xano (agregar size y mime para validación)
         const imageObjects = allImageUrls.map(url => ({
           path: url.replace('https://x8ki-letl-twmt.n7.xano.io', ''),
           name: url.split('/').pop(),
           type: 'image',
-          access: 'public'
+          access: 'public',
+          size: 0,
+          mime: 'image/jpeg',
+          meta: { filename: url.split('/').pop() }
         }));
 
         imageForXano = imageObjects.length === 1 ? imageObjects[0] : imageObjects;
@@ -746,11 +775,15 @@ const Admin = () => {
       if (xanoImageObjects.length > 0) {
         imageUrlForXano = xanoImageObjects.length === 1 ? xanoImageObjects[0] : xanoImageObjects;
       } else if (allImageUrls.length > 0) {
+        // Convertir URLs existentes a objetos esperados por Xano (agregar size y mime para validación)
         const objs = allImageUrls.map(url => ({
           path: url.replace('https://x8ki-letl-twmt.n7.xano.io', ''),
           name: url.split('/').pop(),
           type: 'image',
-          access: 'public'
+          access: 'public',
+          size: 0,
+          mime: 'image/jpeg',
+          meta: { filename: url.split('/').pop() }
         }));
         imageUrlForXano = objs.length === 1 ? objs[0] : objs;
       }

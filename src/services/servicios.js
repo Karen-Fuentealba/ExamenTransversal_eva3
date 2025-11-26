@@ -222,6 +222,8 @@ export const serviciosAPI = {
     try {
       if (imageFiles) return await createServiceWithImage(serviceData, imageFiles);
       const payload = mapServiceToXano(serviceData);
+      // Registrar el payload que se enviará para facilitar depuración con Xano
+      console.log('serviciosAPI.create - payload:', JSON.stringify(payload));
       const response = await api.post(ENDPOINTS.SERVICES, payload);
       return mapServiceFromXano(response.data);
     } catch (error) {
@@ -238,10 +240,17 @@ export const serviciosAPI = {
         if (uploadResult && uploadResult.xanoObjects) payload.imagen = uploadResult.xanoObjects;
         else if (uploadResult && uploadResult.urls) payload.imagen = uploadResult.urls;
       }
+      // Registrar el payload que se enviará para facilitar depuración con Xano
+      console.log(`serviciosAPI.update id=${id} - payload:`, JSON.stringify(payload));
       const response = await api.patch(`${ENDPOINTS.SERVICES}/${id}`, payload);
       return mapServiceFromXano(response.data);
     } catch (error) {
-      console.error('serviciosAPI.update error:', error.response?.data || error.message || error);
+      // Registrar la respuesta completa del servidor cuando esté disponible (evita mostrar [Object])
+      try {
+        console.error('serviciosAPI.update error:', JSON.stringify(error.response?.data || error.message || error));
+      } catch (e) {
+        console.error('serviciosAPI.update error (stringify falló):', error.response?.data || error.message || error);
+      }
       throw error;
     }
   },
@@ -394,11 +403,21 @@ export const scheduleAPI = {
         }
       }
       
+      // Registrar payload de la franja antes de enviarlo
+      console.log('scheduleAPI.createTimeSlot - payload:', JSON.stringify(payload));
       const resp = await api.post('/service_time_slot', payload);
       return resp.data;
     } catch (err) {
-      console.error('scheduleAPI.createTimeSlot error', err?.response?.data || err.message || err);
-      throw err;
+      // Registrar la respuesta completa del servidor para ayudar a identificar errores de validación
+      try {
+        console.error('scheduleAPI.createTimeSlot error', JSON.stringify(err.response?.data || err.message || err));
+      } catch (e) {
+        console.error('scheduleAPI.createTimeSlot error (stringify falló):', err.response?.data || err.message || err);
+      }
+      // Lanzar un Error más claro que incluya el mensaje del servidor cuando esté disponible
+      const serverMessage = err.response?.data?.message || err.response?.data || err.message || 'Error al crear la franja.';
+      const toThrow = typeof serverMessage === 'string' ? new Error(serverMessage) : new Error(JSON.stringify(serverMessage));
+      throw toThrow;
     }
   },
 
@@ -413,6 +432,8 @@ export const scheduleAPI = {
         }
       }
       
+      // Registrar payload de actualización antes de enviarlo
+      console.log(`scheduleAPI.updateTimeSlot id=${id} - payload:`, JSON.stringify(payload));
       const resp = await api.put(`/service_time_slot/${id}`, payload);
       return resp.data;
     } catch (err) {

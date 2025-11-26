@@ -77,8 +77,8 @@ const AdminScheduleEditor = ({ serviceId }) => {
       const payload = {
         service_id: parseInt(serviceId),
         date: newSlotDate, // Enviar exactamente como está en el input
-        start_time: newSlotStart,
-        end_time: newSlotEnd,
+        start_time: newSlotStart.length === 5 ? `${newSlotStart}:00` : newSlotStart,
+        end_time: newSlotEnd.length === 5 ? `${newSlotEnd}:00` : newSlotEnd,
         created_by: user?.id || 1
       };
       
@@ -94,8 +94,14 @@ const AdminScheduleEditor = ({ serviceId }) => {
       // Recargar franjas
       await loadSlots();
     } catch (err) {
-      console.error('Error creating slot:', err);
-      setMessage({ variant: 'danger', text: err.message || 'Error al crear la franja.' });
+      // Registrar la respuesta completa del servidor cuando sea posible para depuración
+      try {
+        console.error('Error creating slot:', JSON.stringify(err.response?.data || err.message || err));
+      } catch (e) {
+        console.error('Error creating slot (stringify falló):', err.response?.data || err.message || err);
+      }
+      const serverMessage = err.response?.data?.message || err.response?.data || err.message || 'Error al crear la franja.';
+      setMessage({ variant: 'danger', text: typeof serverMessage === 'string' ? serverMessage : JSON.stringify(serverMessage) });
     } finally {
       setLoading(false);
     }
@@ -150,8 +156,8 @@ const AdminScheduleEditor = ({ serviceId }) => {
       setLoading(true);
       const payload = {
         date: editingSlot.editDate,
-        start_time: editingSlot.editStart,
-        end_time: editingSlot.editEnd,
+        start_time: (editingSlot.editStart || '').length === 5 ? `${editingSlot.editStart}:00` : editingSlot.editStart,
+        end_time: (editingSlot.editEnd || '').length === 5 ? `${editingSlot.editEnd}:00` : editingSlot.editEnd,
         service_id: parseInt(serviceId)
       };
       
@@ -160,8 +166,13 @@ const AdminScheduleEditor = ({ serviceId }) => {
       setEditingSlot(null);
       await loadSlots();
     } catch (err) {
-      console.error('Error updating slot:', err);
-      setMessage({ variant: 'danger', text: err.message || 'Error al actualizar la franja.' });
+      try {
+        console.error('Error updating slot:', JSON.stringify(err.response?.data || err.message || err));
+      } catch (e) {
+        console.error('Error updating slot (stringify failed):', err.response?.data || err.message || err);
+      }
+      const serverMessage = err.response?.data?.message || err.response?.data || err.message || 'Error al actualizar la franja.';
+      setMessage({ variant: 'danger', text: typeof serverMessage === 'string' ? serverMessage : JSON.stringify(serverMessage) });
     } finally {
       setLoading(false);
     }

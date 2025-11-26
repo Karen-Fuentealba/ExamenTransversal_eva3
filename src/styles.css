@@ -223,9 +223,17 @@ body.admin-panel {
 
 /* ================= NAVBAR LOGO (index.html) ================= */
 .logo-navbar {
-  height: 90px;
+  height: auto;
+  max-height: 90px;
   width: auto;
   object-fit: contain;
+}
+
+/* Make images responsive by default (helps cards, avatars, banners) */
+img { max-width: 100%; height: auto; display: block; }
+
+@media (max-width: 575px) {
+  .logo-navbar { max-height: 56px; }
 }
 
 /* ================= CARRITO BADGE (index.html) ================= */
